@@ -8,14 +8,14 @@ class Solution {
             return false;
         }
 
-        HashMap <Character, Integer> hsh = new HashMap <>();
+        int [] freq = new int [26];
         for (char ch : s.toCharArray()) {
-            hsh.put(ch, hsh.getOrDefault(ch, 0) + 1);
+            freq[ch - 'a']++;
         }
 
         int oddFreq = 0;
-        for (char key : hsh.keySet()) {
-            if (hsh.get(key) % 2 != 0) {
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] % 2 != 0) {
                 oddFreq++;
             }
         }
