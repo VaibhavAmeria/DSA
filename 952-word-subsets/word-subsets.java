@@ -18,8 +18,6 @@ class Solution {
                 maxFreq[i] = Math.max(maxFreq[i], currFreq[i]);
             }
         }
-
-        // Check each word in words1
         for (String word : words1) {
             int[] currWordFreq = getCharacterCount(word);
             boolean isUniversal = true;
@@ -35,7 +33,6 @@ class Solution {
                 ls.add(word);
             }
         }
-        
         return ls;
     }
 }
