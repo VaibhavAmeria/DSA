@@ -15,25 +15,12 @@ class Solution {
                 }
             }
         }
-
-
-        // for (int i : rows) {
-        //     System.out.print(i + " ");
-        // }
-        // System.out.println();
-        // for (int i : cols) {
-        //     System.out.print(i + " ");
-        // }
-        // System.out.println();
-        // System.out.println();
-
         int res = 0;
         for (int [] server : ls) {
             if (rows[server[0]] > 1 || cols[server[1]] > 1) {
                 res++;
             }
         }
-
         return res;
     }
 }
