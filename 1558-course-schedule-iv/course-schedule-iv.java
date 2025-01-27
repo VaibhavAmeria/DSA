@@ -1,19 +1,21 @@
 class Solution {
-    boolean dfs (Map <Integer, List <Integer>> adj, int src, int dest, boolean [] visited) {
+    boolean bfs (Map <Integer, List <Integer>> adj, int src, int dest, boolean [] visited) {
+        Queue <Integer> queue = new LinkedList <>();
+        queue.add(src);
         visited[src] = true;
-        if (src == dest) {
-            return true;
-        }
-
-        boolean isReachable = false;
-        for (int adjNode : adj.getOrDefault(src, new ArrayList <>())) {
-            if (!visited[adjNode]) {
-                isReachable = isReachable || dfs(adj, adjNode, dest, visited);
+        while (!queue.isEmpty()) {
+            int curr = queue.poll();
+            if (curr == dest) {
+                return true;
+            }
+            for (int adjNode : adj.getOrDefault(curr, new ArrayList <>())) {
+                if (!visited[adjNode]) {
+                    visited[adjNode] = true;
+                    queue.add(adjNode);
+                }
             }
         }
-
-        return isReachable;
-
+        return false;
     }
     public List<Boolean> checkIfPrerequisite(int numCourses, int[][] prerequisites, int[][] queries) {
         Map <Integer, List <Integer>> adj = new HashMap <>();
@@ -29,7 +31,7 @@ class Solution {
             int src = query[0];
             int dest = query[1];
             boolean[] visited = new boolean[numCourses];
-            res.add(dfs(adj, src, dest, visited));
+            res.add(bfs(adj, src, dest, visited));
         }
 
         return res;
