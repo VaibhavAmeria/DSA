@@ -18,25 +18,18 @@ class Solution {
             }
         }
 
-        // for (int [] row : isWater) {
-        //     Arrays.fill(row, 0);
-        // }
-
         int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
         while (!queue.isEmpty()) {
-            int size = queue.size();
-            while (size-- > 0) {
-                int [] curr = queue.poll();
-                int x = curr[0];
-                int y = curr[1];
-                for (int [] dir : directions) {
-                    int newX = x + dir[0];
-                    int newY = y + dir[1];
-                    if (newX >= 0 && newX < n && newY >= 0 && newY < m && !visited[newX][newY]) {
-                        heights[newX][newY] = (heights[x][y] + 1);
-                        visited[newX][newY] = true;
-                        queue.add(new int [] {newX, newY});
-                    }
+            int [] curr = queue.poll();
+            int x = curr[0];
+            int y = curr[1];
+            for (int [] dir : directions) {
+                int newX = x + dir[0];
+                int newY = y + dir[1];
+                if (newX >= 0 && newX < n && newY >= 0 && newY < m && !visited[newX][newY]) {
+                    heights[newX][newY] = (heights[x][y] + 1);
+                    visited[newX][newY] = true;
+                    queue.add(new int [] {newX, newY});
                 }
             }
         }
