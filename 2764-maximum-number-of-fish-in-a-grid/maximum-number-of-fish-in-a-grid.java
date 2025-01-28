@@ -1,38 +1,38 @@
 class Solution {
+    private int n, m;
+    private final int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+    private int dfs(int x, int y, int[][] grid) {
+        if (x < 0 || x >= n || y < 0 || y >= m || grid[x][y] == 0) {
+            return 0;
+        }
+
+        int fishCount = grid[x][y];
+        grid[x][y] = 0; // Mark this cell as visited (fish collected)
+
+        for (int[] dir : directions) {
+            int newX = x + dir[0];
+            int newY = y + dir[1];
+            fishCount += dfs(newX, newY, grid);
+        }
+
+        return fishCount;
+    }
+
     public int findMaxFish(int[][] grid) {
-        int n = grid.length;
-        int m = grid[0].length;
-        int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-        boolean[][] visited = new boolean[n][m];
+        n = grid.length;
+        m = grid[0].length;
+
         int maxFish = 0;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (grid[i][j] != 0 && !visited[i][j]) {
-                    Queue<int[]> queue = new LinkedList<>();
-                    visited[i][j] = true;
-                    queue.offer(new int[]{i, j});
-                    int currSum = 0;
-                    while (!queue.isEmpty()) {
-                        int[] curr = queue.poll();
-                        int x = curr[0];
-                        int y = curr[1];
-                        currSum += grid[x][y];
-
-                        for (int[] dir : directions) {
-                            int newX = x + dir[0];
-                            int newY = y + dir[1];
-                            if (newX >= 0 && newX < n && newY >= 0 && newY < m 
-                                && grid[newX][newY] != 0 && !visited[newX][newY]) {
-                                visited[newX][newY] = true;
-                                queue.offer(new int[]{newX, newY});
-                            }
-                        }
-                    }
-                    maxFish = Math.max(maxFish, currSum);
+                if (grid[i][j] > 0) { // Fish cell found
+                    maxFish = Math.max(maxFish, dfs(i, j, grid));
                 }
             }
         }
+
         return maxFish;
     }
 }
