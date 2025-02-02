@@ -10,7 +10,8 @@ class Solution {
                 if (isWater[i][j] == 1) {
                     queue.add(new int [] {i, j});
                     visited[i][j] = true;
-                    heights[i][j] = 0;
+                    heights[i][j] =
+                    0;
                 }
                 else {
                     heights[i][j] = -1;
