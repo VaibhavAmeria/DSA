@@ -1,7 +1,16 @@
 class Solution {
     public int maximumCandies(int[] candies, long k) {
         int n = candies.length;
-        int max = Arrays.stream(candies).max().orElse(-1);
+        int max = Integer.MIN_VALUE;
+        long total = 0;
+        for (int i = 0; i < n; i++) {
+            total += candies[i];
+            max = Math.max(max, candies[i]);
+        }
+
+        if (total < k) {
+            return 0;
+        }
 
         int start = 1;
         int end = max;
