@@ -1,31 +1,29 @@
 class Solution {
     public int minOperations(int[][] grid, int x) {
-        int m = grid.length;
-        int n = grid[0].length;
-        
-        List<Integer> vec = new ArrayList<>();
-        
-        // Flatten the grid into a list
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                vec.add(grid[i][j]);
+        int n = grid.length;
+        int m = grid[0].length;
+        int size = n*m;
+        int [] arr = new int [size];
+
+        int k = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                arr[k++] = grid[i][j];
             }
         }
-        
-        int L = vec.size();
-        
-        // Find the median using sorting (alternative to nth_element in C++)
-        Collections.sort(vec);
-        int target = vec.get(L / 2);
-        
-        int result = 0;
-        for (int num : vec) {
-            if (num % x != target % x) {
+        Arrays.sort(arr);
+
+        int target = arr[size/2];
+        int ans = 0;
+        for (int i : arr) {
+            if ((Math.abs(target - i) % x) == 0) {
+                ans += ((Math.abs(target - i)) / x);
+            }
+            else {
                 return -1;
             }
-            result += Math.abs(target - num) / x;
         }
-        
-        return result;
+
+        return ans;
     }
 }
