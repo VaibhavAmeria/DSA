@@ -22,9 +22,6 @@ class Solution {
         int currCount = 0;
         for (int i = 0; i < nums.size(); i++) {
             int num = nums.get(i);
-            // map1.put(num, map1.getOrDefault(num, 0) + 1);
-            // map2.put(num, map2.getOrDefault(num, 0) - 1);
-
             if (num == majorityElement) {
                 currCount += 1;
             }
