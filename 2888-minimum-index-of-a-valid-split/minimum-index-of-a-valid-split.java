@@ -7,11 +7,6 @@ class Solution {
         for (int num : nums) {
             map2.put(num, map2.getOrDefault(num, 0) + 1);
         }
-
-        // for (Map.Entry<Integer, Integer> entry : map2.entrySet()) {
-        //     System.out.println(entry.getKey() + " " + entry.getValue());
-        // }
-
         for (int i = 0; i < nums.size(); i++) {
             int num = nums.get(i);
             map1.put(num, map1.getOrDefault(num, 0) + 1);
