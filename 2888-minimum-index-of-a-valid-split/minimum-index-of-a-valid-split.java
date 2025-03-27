@@ -12,7 +12,9 @@ class Solution {
             map1.put(num, map1.getOrDefault(num, 0) + 1);
             map2.put(num, map2.getOrDefault(num, 0) - 1);
 
-            if (map1.get(num) > (i+1)/2 && map2.get(num) > (n-i-1)/2) {
+            int n1 = i + 1;
+            int n2 = n - i - 1;
+            if (map1.get(num) > n1/2 && map2.get(num) > n2/2) {
                 return i;
             }
         }
