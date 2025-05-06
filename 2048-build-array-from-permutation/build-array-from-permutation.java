@@ -1,12 +1,15 @@
 class Solution {
     public int[] buildArray(int[] nums) {
         int n = nums.length;
-        int [] arr = new int [n];
-
         for (int i = 0; i < n; i++) {
-            arr[i] = nums[nums[i]];
+            // (n * nums[nums[i]] % n) helps to retrive original value
+            nums[i] = nums[i] + n * (nums[nums[i]] % n);
         }
 
-        return arr;
+        for (int i = 0; i < n; i++) {
+            // helps to retrive (has to swap with) value
+            nums[i] = nums[i] / n;
+        }
+        return nums;
     }
 }
