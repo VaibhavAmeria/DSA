@@ -18,7 +18,6 @@ class Solution {
             return a+c;
         }
         else if(a+c > d+b){
-            long ac = (a+c) - (d+b);
             if(d>0){
                 return a+c;
             }
@@ -27,7 +26,6 @@ class Solution {
             }
         }
         else{
-            long ac = (d+b) - (a+c);
             if(c>0){
                 return d+b;
             }
