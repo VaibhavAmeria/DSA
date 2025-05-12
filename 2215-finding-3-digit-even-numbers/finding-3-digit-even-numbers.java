@@ -1,32 +1,43 @@
 class Solution {
     public int[] findEvenNumbers(int[] digits) {
-        Set<Integer> set = new HashSet<>();
         int n = digits.length;
+        int [] freq = new int [10];
+        List<Integer> ls = new ArrayList<>();
+        for (int i : digits) {
+            freq[i]++;
+        }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
-                    if (i == j || j == k || i == k) {
+        for (int i = 1; i <= 9; i++) {
+            // no leading zeroes for i
+            if (freq[i] == 0) {
+                continue;
+            }
+            freq[i]--;
+            for (int j = 0; j <= 9; j++) {
+                if (freq[j] == 0) {
+                    continue;
+                }
+                freq[j]--;
+                for (int k = 0; k <= 8; k+=2) {
+                    // for having even digit
+                    if (freq[k] == 0) {
                         continue;
                     }
-
-                    int num = digits[i] * 100 + digits[j] * 10 + digits[k];
-
-                    if (num >= 100 && num % 2 == 0) {
-                        set.add(num);
-                    }
+                    freq[k]--;
+                    int digit = i*100 + j*10 + k*1;
+                    ls.add(digit);
+                    freq[k]++;
                 }
+                freq[j]++;
             }
+            freq[i]++;
         }
 
-        List<Integer> resultList = new ArrayList<>(set);
-        Collections.sort(resultList);
-
-        int[] result = new int[resultList.size()];
-        for (int i = 0; i < resultList.size(); i++) {
-            result[i] = resultList.get(i);
+        // Collections.sort(ls);
+        int [] res = new int [ls.size()];
+        for (int i = 0; i < ls.size(); i++) {
+            res[i] = ls.get(i);
         }
-
-        return result;
+        return res;
     }
 }
