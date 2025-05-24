@@ -14,10 +14,9 @@ class Solution {
         }
         int l = 0;
         int r = m-1;
-        int[] prevState = new int[n];
         while (l <= r) {
             int mid = l + (r-l)/2;
-            int[] range = Arrays.copyOf(prevState, n);
+            int[] range = new int [n];
             // Apply all queries from 0 to mid
             for (int i = 0; i <= mid; i++) {
                 int[] query = queries[i];
@@ -33,6 +32,13 @@ class Solution {
                 range[i] = cumSum;
             }
             // Check if all elements can be made zero
+            // System.out.println("mid -> " + mid);
+            // System.out.print("range -> ");
+            // for (int val : range) {
+            //     System.out.print(val + " ");
+            // }
+            // System.out.println();
+
             canBeZero  = true;
             for (int i = 0; i < n; i++) {
                 if (nums[i] + range[i] > 0) {
