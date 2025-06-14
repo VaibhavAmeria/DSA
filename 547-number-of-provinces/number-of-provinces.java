@@ -1,10 +1,15 @@
 class Solution {
-    void dfs (int u, Map <Integer, List<Integer>> adj, boolean [] visited) {
+    void bfs (int u, Map <Integer, List<Integer>> adj, boolean [] visited) {
+        Queue <Integer> queue = new LinkedList <>();
+        queue.offer(u);
         visited[u] = true;
-        for (int ngh : adj.get(u)) {
-            if (!visited[ngh]) {
-                visited[ngh] = true;
-                dfs (ngh, adj, visited);   
+        while (!queue.isEmpty()) {
+            int polled = queue.poll();
+            for (int ngh : adj.get(polled)) {
+                if (!visited[ngh]) {
+                    visited[ngh] = true;
+                    queue.offer(ngh); 
+                }
             }
         }
     }
@@ -27,7 +32,7 @@ class Solution {
         int noOfProvinces = 0;
         for (int i = 0; i < isConnected.length; i++) {
             if (!visited[i]) {
-                dfs (i, adj, visited);
+                bfs (i, adj, visited);
                 noOfProvinces++;
             }
         }
