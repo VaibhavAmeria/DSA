@@ -1,41 +1,19 @@
 class Solution {
     public int minMaxDifference(int num) {
-        String strNum = String.valueOf(num);
-        StringBuilder maxBuilder = new StringBuilder(strNum);
-        StringBuilder minBuilder = new StringBuilder(strNum);
-        
-        // Find first non-9 digit for max replacement
-        char maxReplace = '9';
-        for (char c : strNum.toCharArray()) {
-            if (c != '9') {
-                maxReplace = c;
+        String str1 = Integer.toString(num);
+        String str2 = str1;
+        int idx = 0;
+        for(int i = 0; i < str1.length(); i++) {
+            // getting most significant bit to be replaced
+            if(str1.charAt(i) != '9') {
+                idx = i;
                 break;
             }
         }
-        
-        // Replace all occurrences of maxReplace with '9' for maximum number
-        for (int i = 0; i < maxBuilder.length(); i++) {
-            if (maxBuilder.charAt(i) == maxReplace) {
-                maxBuilder.setCharAt(i, '9');
-            }
+        if(idx < str1.length()) {
+            str1 = str1.replace(str1.charAt(idx), '9');
         }
-
-        System.out.println("maxBuilder -> " + maxBuilder.toString());
-        
-        // First digit for min replacement
-        char minReplace = strNum.charAt(0);
-        
-        // Replace all occurrences of minReplace with '0' for minimum number
-        for (int i = 0; i < minBuilder.length(); i++) {
-            if (minBuilder.charAt(i) == minReplace) {
-                minBuilder.setCharAt(i, '0');
-            }
-        }
-        System.out.print("minBuilder -> " + minBuilder.toString());
-
-        int maxNum = Integer.parseInt(maxBuilder.toString());
-        int minNum = Integer.parseInt(minBuilder.toString());
-        
-        return maxNum - minNum;
+        str2 = str2.replace(str2.charAt(0), '0');
+        return Integer.parseInt(str1) - Integer.parseInt(str2);
     }
 }
