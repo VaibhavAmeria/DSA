@@ -10,7 +10,6 @@ class Solution {
                 j++;
             }
             if (j > i) {
-                System.out.print(nums[i]);
                 count++;
                 i = j - 1;
             }
