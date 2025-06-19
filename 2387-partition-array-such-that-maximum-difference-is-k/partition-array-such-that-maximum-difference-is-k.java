@@ -9,10 +9,10 @@ class Solution {
             while (j < n && nums[j] <= numberToJump) {
                 j++;
             }
-            if (j > i) {
+            // if (j > i) {
                 count++;
                 i = j - 1;
-            }
+            // }
         }
         return count;
     }
