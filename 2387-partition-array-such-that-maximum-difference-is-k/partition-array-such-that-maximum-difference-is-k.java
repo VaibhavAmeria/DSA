@@ -5,14 +5,11 @@ class Solution {
         int count = 0;
         for (int i = 0; i < n; i++) {
             int numberToJump = nums[i] + k;
-            int j = i;
-            while (j < n && nums[j] <= numberToJump) {
-                j++;
+            while (i < n && nums[i] <= numberToJump) {
+                i++;
             }
-            // if (j > i) {
-                count++;
-                i = j - 1;
-            // }
+            count++;
+            i -= 1;
         }
         return count;
     }
