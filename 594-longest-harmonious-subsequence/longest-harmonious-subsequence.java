@@ -1,17 +1,30 @@
+import java.util.HashMap;
+
 class Solution {
     public int findLHS(int[] nums) {
-        TreeMap<Integer, Integer> treeMap = new TreeMap<>();
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        
+        // Count the frequency of each number
         for (int num : nums) {
-            treeMap.put(num, treeMap.getOrDefault(num, 0)+1);
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
         }
 
-        Integer[] keys = treeMap.keySet().toArray(new Integer[0]);
-        int length = 0;
-        for (int i = 0; i < keys.length; i++) {
-            if (i != 0 && (keys[i] - keys[i-1] == 1)) {
-                length = Math.max(length, treeMap.get(keys[i]) + treeMap.get(keys[i-1]));
+        int maxLength = 0;
+
+        // Iterate through the frequency map
+        for (int key : frequencyMap.keySet()) {
+            // Check if the next number exists (key + 1)
+            if (frequencyMap.containsKey(key + 1)) {
+                int currentLength = frequencyMap.get(key) + frequencyMap.get(key + 1);
+                maxLength = Math.max(maxLength, currentLength);
+            }
+            // Check if the previous number exists (key - 1)
+            if (frequencyMap.containsKey(key - 1)) {
+                int currentLength = frequencyMap.get(key) + frequencyMap.get(key - 1);
+                maxLength = Math.max(maxLength, currentLength);
             }
         }
-        return length;
+
+        return maxLength;
     }
 }
