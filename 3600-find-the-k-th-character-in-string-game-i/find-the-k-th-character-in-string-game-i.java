@@ -3,12 +3,14 @@ class Solution {
         String s = "a";
 
         while (s.length() < k) {
-            String copy = s;
-            for (char ch : copy.toCharArray()) {
-                copy += (char) (ch + 1);
-            }
-            s = copy;
+            // length of s before append
+            int n = s.length(); // 1
+            for (int i = 0; i < n; i++) {
+                s += (char) (s.charAt(i) + 1);
+            }   
         }
+
+        System.out.print(s);
         return s.charAt(k-1);
     }
 }
