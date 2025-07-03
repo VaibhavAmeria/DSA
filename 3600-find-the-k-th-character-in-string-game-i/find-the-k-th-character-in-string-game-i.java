@@ -1,14 +1,16 @@
 class Solution {
     public char kthCharacter(int k) {
-        String s = "a";
+        int characterIndex = k-1; // originally at k-1 index in final string
 
-        while (s.length() < k) {
-            // length of s before append
-            int n = s.length(); // 1
-            for (int i = 0; i < n; i++) {
-                s += (char) (s.charAt(i) + 1);
-            }   
+        // count no of setBits
+        int setBits = 0;
+        while (characterIndex != 0) {
+            if ((characterIndex & 1) == 1) {
+                setBits++;
+            }
+            characterIndex = characterIndex >> 1;
         }
-        return s.charAt(k-1);
+        // a is the starting character
+        return (char) ('a' + setBits);
     }
 }
