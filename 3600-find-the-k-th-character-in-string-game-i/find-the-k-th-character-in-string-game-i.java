@@ -9,8 +9,6 @@ class Solution {
                 s += (char) (s.charAt(i) + 1);
             }   
         }
-
-        System.out.print(s);
         return s.charAt(k-1);
     }
 }
