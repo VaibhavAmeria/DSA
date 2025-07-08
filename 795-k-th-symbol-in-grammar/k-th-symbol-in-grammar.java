@@ -7,9 +7,9 @@ class Solution {
         if (k <= halfLength) {
             return thueMorseRecursive(n - 1, k);
         } else {
-            int c = thueMorseRecursive(n - 1, k - halfLength);
-            return (c == 0) ? 1 : 0;
-        }
+            int c = 1 - thueMorseRecursive(n - 1, k - halfLength);
+            return c;
+        } 
     }
     public int kthGrammar(int n, int k) {
         return thueMorseRecursive(n, k);
