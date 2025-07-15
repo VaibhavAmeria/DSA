@@ -1,6 +1,3 @@
-import java.util.Arrays;
-import java.util.PriorityQueue;
-
 class Solution {
     public int mostBooked(int n, int[][] meetings) {
         // Sort meetings based on start time
@@ -9,8 +6,11 @@ class Solution {
         // PriorityQueue to manage rooms based on their ending time
         PriorityQueue<int[]> occupied = new PriorityQueue<>((a, b) -> {
             if (a[0] != b[0]) {
+                // if ending times are not equal
+                // sort based on their ending times
                 return a[0] - b[0];
             } else {
+                // else sort based on room no's
                 return a[1] - b[1];
             }
         });
@@ -22,7 +22,6 @@ class Solution {
         }
         
         int[] count = new int[n];
-        
         for (int[] meeting : meetings) {
             int start = meeting[0];
             int end = meeting[1];
