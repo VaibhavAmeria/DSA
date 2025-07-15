@@ -1,52 +1,61 @@
 import java.util.Arrays;
+import java.util.PriorityQueue;
 
 class Solution {
     public int mostBooked(int n, int[][] meetings) {
         // Sort meetings based on start time
         Arrays.sort(meetings, (a, b) -> a[0] - b[0]);
         
-        // Change lastAvailableAt to long[]
-        long[] lastAvailableAt = new long[n];
-        int[] usedCount = new int[n];
+        // PriorityQueue to manage rooms based on their ending time
+        PriorityQueue<int[]> occupied = new PriorityQueue<>((a, b) -> {
+            if (a[0] != b[0]) {
+                return a[0] - b[0];
+            } else {
+                return a[1] - b[1];
+            }
+        });
+        
+        // PriorityQueue to manage free rooms (smallest room number first)
+        PriorityQueue<Integer> free = new PriorityQueue<>();
+        for (int i = 0; i < n; i++) {
+            free.add(i);
+        }
+        
+        int[] count = new int[n];
         
         for (int[] meeting : meetings) {
-            boolean found = false;
             int start = meeting[0];
             int end = meeting[1];
-            long duration = end - start;  // Change duration to long
-            long earlyEndingRoomTime = Long.MAX_VALUE;  // Use Long.MAX_VALUE
-            int earlyEndingRoom = 0;
-
-            for (int room = 0; room < n; room++) {
-                if (lastAvailableAt[room] <= start) {
-                    // Assign the room
-                    lastAvailableAt[room] = end;  // No change needed here
-                    usedCount[room]++;
-                    found = true;
-                    break;
-                }
-
-                if (lastAvailableAt[room] < earlyEndingRoomTime) {
-                    earlyEndingRoomTime = lastAvailableAt[room];
-                    earlyEndingRoom = room;
-                }
+            int duration = end - start;
+            
+            // Release rooms that have become available by the current start time
+            while (!occupied.isEmpty() && occupied.peek()[0] <= start) {
+                int[] room = occupied.poll();
+                free.add(room[1]);
             }
-
-            if (!found) {
-                lastAvailableAt[earlyEndingRoom] += duration;  // No change needed here
-                usedCount[earlyEndingRoom]++;
+            
+            if (!free.isEmpty()) {
+                // Assign to the smallest available free room
+                int room = free.poll();
+                count[room]++;
+                occupied.add(new int[] {end, room});
+            } else {
+                // Wait for the next available room
+                int[] room = occupied.poll();
+                count[room[1]]++;
+                occupied.add(new int[] {room[0] + duration, room[1]});
             }
         }
-
-        int res = 0;
-        int maxUse = 0;
-        for (int i = 0; i < usedCount.length; i++) {
-            if (usedCount[i] > maxUse) {
-                maxUse = usedCount[i];
-                res = i;
+        
+        // Find the room with the maximum bookings
+        int maxCount = 0;
+        int result = 0;
+        for (int i = 0; i < n; i++) {
+            if (count[i] > maxCount) {
+                maxCount = count[i];
+                result = i;
             }
         }
-
-        return res;
+        return result;
     }
 }
