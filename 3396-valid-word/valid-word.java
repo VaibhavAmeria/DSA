@@ -1,24 +1,21 @@
 class Solution {
     public boolean isValid(String word) {
-        int n = word.length();
-        String vowels = "aeiouAEIOU";
-        String consonants = "bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ";
-        String digits = "1234567890";
-
         boolean hasVowel =  false;
         boolean hasConsonent =  false;
-        boolean hasDigit =  false;
+        String vowels = "aeiou";
+        int n = word.length();
         for (char ch : word.toCharArray()) {
-            if (!vowels.contains(String.valueOf(ch)) &&
-                !consonants.contains(String.valueOf(ch)) &&
-                !digits.contains(String.valueOf(ch))) {
-                return false; // Found a special character
+            if (Character.isLetter(ch)) {
+                char lower = Character.toLowerCase(ch);
+                if (vowels.contains(String.valueOf(lower))) {
+                    hasVowel = true;
+                }
+                else {
+                    hasConsonent = true;
+                }
             }
-            if (vowels.contains(String.valueOf(ch))) {
-                hasVowel = true;
-            }
-            if (consonants.contains(String.valueOf(ch))) {
-                hasConsonent = true;
+            else if (!Character.isDigit(ch)) {
+                return false;
             }
         }
 
