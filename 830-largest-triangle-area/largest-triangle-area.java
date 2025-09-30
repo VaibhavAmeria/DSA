@@ -12,6 +12,8 @@ class Solution {
                     int y2 = points[j][1];
                     int x3 = points[k][0];
                     int y3 = points[k][1];
+
+                    // shoe lace formula
                     double area = 0.5 * Math.abs(
                         x1 * (y2 - y3) +
                         x2 * (y3 - y1) +
