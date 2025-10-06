@@ -1,6 +1,7 @@
 class Solution {
     // want to find max value in minimum path
     // apply binary search on ans
+    // O(n^2 -> of dfs * log(n^2) -> range between i and j)
     int n;
     int m;
     int[][] directions = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
