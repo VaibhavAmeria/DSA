@@ -8,6 +8,9 @@ class Solution {
             else if (num == original) {
                 original *= 2;
             }
+            else {
+                break;
+            }
         }
         return original;
     }
