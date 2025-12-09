@@ -1,47 +1,52 @@
+import java.util.Stack;
+
 class MinStack {
-    Stack<Integer> st1;
-    Stack<Integer> st2;
+    // 1. Change stack to store Long to prevent overflow during encoding
+    private Stack<Long> stack;
+    private int min; // We can still keep min as int, or upgrade to long for consistency
 
     public MinStack() {
-        st1 = new Stack <>();
-        st2 = new Stack <>(); // for storing min
+        stack = new Stack<>();
     }
-    
+
     public void push(int val) {
-        st1.push(val);
-        if (st2.isEmpty() || val <= st2.peek()) {
-            st2.push(val);
+        // Cast to long immediately for calculations
+        long longVal = (long) val;
+        
+        if (stack.isEmpty()) {
+            min = val;
+            stack.push(longVal);
+        } else if (longVal < min) {
+            // 2. Use 2L to force long arithmetic
+            stack.push(2 * longVal - min);
+            min = val;
+        } else {
+            stack.push(longVal);
         }
     }
-    
+
     public void pop() {
-        if (st1.isEmpty()) {
-            return;
-        }
-        int popped = st1.pop();
-        if (!st2.isEmpty() && popped == st2.peek()) {
-            st2.pop();
+        if (stack.isEmpty()) return;
+        
+        long top = stack.pop();
+        
+        // 3. Compare top (long) with min (promoted to long)
+        if (top < min) {
+            // Restore previous min: 2 * min - top
+            min = (int) (2L * min - top);
         }
     }
-    
+
     public int top() {
-        return st1.peek();
-    }
-    
-    public int getMin() {
-        if (!st2.isEmpty()) {
-            System.out.println(st2.peek());
-            return st2.peek();
+        long top = stack.peek();
+        // If top is encoded (less than min), the real top is min
+        if (top < min) {
+            return min;
         }
-        return 0;
+        return (int) top;
+    }
+
+    public int getMin() {
+        return min;
     }
 }
-
-/**
- * Your MinStack object will be instantiated and called as such:
- * MinStack obj = new MinStack();
- * obj.push(val);
- * obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.getMin();
- */
