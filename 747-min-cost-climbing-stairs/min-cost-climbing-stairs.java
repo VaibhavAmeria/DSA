@@ -7,9 +7,8 @@ class Solution {
         if (dp[i] != -1) {
             return dp[i];
         }
-        // Key fix: You MUST pay cost[i] to step here, THEN decide next jump
-        int take1 = cost[i] + soln(dp, cost, i+1);  // Step on i, jump to i+1
-        int take2 = cost[i] + soln(dp, cost, i+2);  // Step on i, jump to i+2  
+        int take1 = cost[i] + soln(dp, cost, i+1);
+        int take2 = cost[i] + soln(dp, cost, i+2);
         return dp[i] = Math.min(take1, take2);
     }
     public int minCostClimbingStairs(int[] cost) {
