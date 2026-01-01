@@ -10,10 +10,10 @@ class Solution {
         if (dp[i][j] != -1) {
             return dp[i][j];
         }
-        int right = soln (i+1, j, m, n);
-        int bottom = soln (i, j+1, m, n);
+        int right = soln (i, j+1, m, n);
+        int down = soln (i+1, j, m, n);
 
-        return dp[i][j] = right + bottom;
+        return dp[i][j] = right + down;
     }
     public int uniquePaths(int m, int n) {
         dp = new int [m+1][n+1];
