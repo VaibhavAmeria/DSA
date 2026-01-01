@@ -15,6 +15,8 @@ class Solution {
         }
 
         int minHealthNeededNext = Math.min(soln(i+1, j, grid), soln(i, j+1, grid));
+
+        // minHealthNeededNext - grid[i][j] -> if grid[i][j] is positive then atleast 1hp is needed, else in case of negative 1-(-5) ie 6 bcoz 5 is deducted on entring in cell grid[i][j]
         return dp[i][j] = Math.max(1, minHealthNeededNext - grid[i][j]);
     }
     public int calculateMinimumHP(int[][] dungeon) {
