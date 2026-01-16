@@ -24,19 +24,21 @@ class Solution {
         Arrays.sort(newVFences);
 
         int maxSide = 0;
-        for (int i = 0; i < newVFences.length; i++) {
-            for (int j = i+1; j < newVFences.length; j++) {
-                int diff = newVFences[j] - newVFences[i];
-                vFenceSet.add(diff);
-            }
-        }
 
         for (int i = 0; i < newHFences.length; i++) {
             for (int j = i+1; j < newHFences.length; j++) {
                 int diff = newHFences[j] - newHFences[i];
-                if (vFenceSet.contains(diff)) {
+                hFenceSet.add(diff);
+            }
+        }
+
+        for (int i = 0; i < newVFences.length; i++) {
+            for (int j = i+1; j < newVFences.length; j++) {
+                int diff = newVFences[j] - newVFences[i];
+                if (hFenceSet.contains(diff)) {
                     maxSide = Math.max(maxSide, diff);
                 }
+                vFenceSet.add(diff);
             }
         }
 
