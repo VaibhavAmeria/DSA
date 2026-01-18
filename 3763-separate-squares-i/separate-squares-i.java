@@ -4,7 +4,6 @@ class Solution {
         for (int [] sq : squares) {
             double y = sq[1]; 
             double l = sq[2];
-
             double bottom_y = y;
             double top_y = y + l;
             
