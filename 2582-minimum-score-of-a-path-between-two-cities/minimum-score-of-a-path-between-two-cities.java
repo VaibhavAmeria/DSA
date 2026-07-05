@@ -10,19 +10,31 @@ class Pair {
 class Solution {
     boolean [] visited;
     int result;
-    void dfs (int start, int end, Map <Integer, List<Pair>> adj) {
+    Queue <Integer> queue;
+    void bfs (int start, Map <Integer, List<Pair>> adj) {
+        // 1. Put the start node in the queue and mark it visited
+        queue.offer(start);
         visited[start] = true;
 
-        // Safety check: if the node has no outward edges, stop.
-        if (!adj.containsKey(start)) return;
+        while (!queue.isEmpty()) {
+            // Take the front node out of the queue
+            int curr = queue.poll();
 
-        for (Pair neighbour : adj.get(start)) {
-            result = Math.min(result, neighbour.cost);
-            if (!visited[neighbour.edge]) {
-                dfs(neighbour.edge, end, adj);
+            // Safety check: if city has no outgoing roads, skip
+            if (!adj.containsKey(curr)) continue;
+
+            // Look at all neighbors of the current node
+            for (Pair neighbour : adj.get(curr)) {
+                // We always update the minimum cost for every edge we see
+                result = Math.min(result, neighbour.cost);
+
+                // If we haven't visited the connected city, add it to the queue
+                if (!visited[neighbour.edge]) {
+                    visited[neighbour.edge] = true; // Mark visited immediately
+                    queue.offer(neighbour.edge);    // Put in queue to process later
+                }
             }
         }
-
     }
 
     public int minScore(int n, int[][] roads) {
@@ -30,6 +42,7 @@ class Solution {
         // 1 (city) -> {{2(city), 5(weight)}, {3, 2}, 5, 8}
         Map <Integer, List<Pair>> adj = new HashMap <>();
         visited = new boolean [n+1];
+        queue = new LinkedList <>(); 
         result = Integer.MAX_VALUE;
 
         for (int [] road : roads) {
@@ -42,7 +55,7 @@ class Solution {
             adj.computeIfAbsent(v, k -> new ArrayList<>()).add(new Pair (u, c));
         }
 
-        dfs (1, n, adj);;
+        bfs (1, adj);;
         return result;
     }
 }
