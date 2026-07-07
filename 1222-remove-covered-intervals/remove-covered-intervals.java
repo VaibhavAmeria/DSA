@@ -10,17 +10,17 @@ class Solution {
         });
 
         int n = intervals.length;
-        List<int[]> res = new ArrayList<>();
-        res.add(intervals[0]);
-
+        int count = 1;
+        int lastIntervalEndPoint = intervals[0][1];
         for (int i = 1; i < n; i++) {
             // no need to check arr[0] as it is always smaller or equal bcoz sorted
-            if (res.get(res.size()-1)[1] >= intervals[i][1]) {
+            if (lastIntervalEndPoint >=  intervals[i][1]) {
                 continue;
             }
-            res.add(intervals[i]);
+            lastIntervalEndPoint = intervals[i][1];
+            count++;
         }
 
-        return res.size();   
+        return count;
     }
 }
