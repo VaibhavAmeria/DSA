@@ -14,14 +14,15 @@ class Solution {
             Arrays.fill(row, Integer.MAX_VALUE);
         }
 
-        Deque<int[]> dq = new ArrayDeque<>();
+        PriorityQueue<int[]> queue = new PriorityQueue<>((a, b) -> a[2] - b[2]);
         result[0][0] = grid.get(0).get(0); //source {0, 0}
-        dq.offerFirst(new int[]{0, 0});
+        queue.offer(new int[]{0, 0, result[0][0]});
 
-        while (!dq.isEmpty()) {
-            int [] cell = dq.pollFirst();
+        while (!queue.isEmpty()) {
+            int [] cell = queue.poll();
             int r = cell[0]; 
             int c = cell[1];
+            int w = cell[2];
 
             for (int [] dir : directions) {
                 int newR = r + dir[0];
@@ -34,17 +35,10 @@ class Solution {
                 if (result[r][c] + grid.get(newR).get(newC) < result[newR][newC]) {
                     result[newR][newC] = result[r][c] + grid.get(newR).get(newC);
 
-                    if (grid.get(newR).get(newC) == 0)
-                        dq.offerFirst(new int[]{newR, newC});
-                    else {
-                        dq.offerLast(new int[]{newR, newC});
-                    }
+                    queue.offer(new int [] {newR, newC, result[newR][newC]});
                 }
             }
         }
-
-        System.out.println("result[n-1][m-1] -> " + result[n-1][m-1]);
-        System.out.println("health -> " + health);
         return result[n-1][m-1] < health ? true : false;
     }
 }
