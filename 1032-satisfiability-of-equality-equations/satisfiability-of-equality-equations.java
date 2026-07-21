@@ -33,7 +33,6 @@ class Solution {
         parent = new int [26];
         rank = new int [26];
 
-        // CRUCIAL FIX: Initialize each node to be its own parent.
         for (int i = 0; i < 26; i++) {
             parent[i] = i;
             rank[i] = 1;
@@ -42,7 +41,7 @@ class Solution {
         for (String s : equations) {
             int x = (int) s.charAt(0) - 'a';
             int y = (int) s.charAt(s.length() - 1) - 'a';
-            if (s.substring(1, 3).equals("==")) {
+            if (s.substring(1, 3).equals("==") && x != y) {
                 // equals sign
                 union(x, y);
             }
