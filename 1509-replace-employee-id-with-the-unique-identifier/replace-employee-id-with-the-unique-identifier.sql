@@ -1,0 +1,7 @@
+# Write your MySQL query statement below
+select 
+    COALESCE(eu.unique_id, NULL) as unique_id,
+    e.name
+from employees e
+left join EmployeeUNI eu
+on e.id = eu.id
